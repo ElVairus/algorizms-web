@@ -1,23 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Algorizms Motion & 3D Interactive UI Showcase</title>
-  <!-- Google Fonts: Outfit & Inter -->
+  <title>ALGORIZMS — Growth Engineered Systems | Technology • Growth • Intelligence</title>
+  <meta name="description" content="We don't just deliver services. We build systems that create momentum. Algorizms converges Tech Solutions, Growth Marketing, and Data Analytics." />
+
+  <!-- Google Fonts: Space Grotesk, Outfit, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --color-blue: #0284C7;
-      --color-purple: #7C3AED;
-      --color-gold: #B8832A;
-      --color-ink: #0F0D0C;
-      --color-card-bg: rgba(26, 21, 18, 0.7);
+      /* Brand Color Tokens */
+      --color-ink: #120F0D;
+      --color-card-bg: rgba(26, 21, 18, 0.75);
+      --color-card-border: rgba(255, 255, 255, 0.09);
       --color-paper: #FAF8F4;
       --color-gray: #9E9689;
+      --color-gray-light: #E8E4DA;
+      
+      /* Strategic Pillars */
+      --color-blue: #0284C7;       /* Tech Solutions */
+      --color-blue-light: #7DD3FC;
+      --color-purple: #7C3AED;     /* Growth Marketing / Master Accent */
+      --color-purple-deep: #4C1D95;
+      --color-gold: #B8832A;       /* Data Analytics */
+      --color-gold-light: #FCD34D;
+
+      /* Typography */
+      --font-display: 'Space Grotesk', 'Outfit', sans-serif;
       --font-heading: 'Outfit', sans-serif;
       --font-body: 'Inter', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -38,7 +51,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* 3D Particle Canvas Background */
+    /* 3D WebGL Particle Galaxy Canvas */
     #particle-canvas {
       position: fixed;
       top: 0;
@@ -49,156 +62,193 @@
       pointer-events: none;
     }
 
-    .container {
+    .site-wrapper {
       position: relative;
       z-index: 1;
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 40px 24px 100px;
     }
 
-    /* Top Navigation Header */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation Header */
     header {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      margin: 20px auto 40px;
+      max-width: 1200px;
+      padding: 14px 28px;
+      background: rgba(18, 15, 13, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--color-card-border);
+      border-radius: 999px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 28px;
-      background: rgba(26, 21, 18, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
-      margin-bottom: 60px;
+      transition: all 0.3s ease;
     }
 
     .brand-logo {
-      font-family: var(--font-heading);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--color-paper);
+    }
+
+    .logo-symbol {
+      width: 32px;
+      height: 32px;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #0284C7 0%, #7C3AED 50%, #B8832A 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .badge-pill {
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: rgba(124, 58, 237, 0.15);
-      border: 1px solid rgba(124, 58, 237, 0.4);
-      color: #C4B5FD;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      max-width: 860px;
-      margin: 0 auto 80px;
-      position: relative;
-    }
-
-    .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
-      background: rgba(2, 132, 199, 0.1);
-      border: 1px solid rgba(2, 132, 199, 0.3);
-      border-radius: 999px;
-      font-size: 0.85rem;
-      color: #7DD3FC;
-      margin-bottom: 24px;
-      animation: pulseGlow 4s infinite alternate;
-    }
-
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px rgba(2, 132, 199, 0.2); }
-      100% { box-shadow: 0 0 25px rgba(124, 58, 237, 0.4); }
-    }
-
-    h1 {
-      font-family: var(--font-heading);
-      font-size: clamp(2.5rem, 5vw, 4.2rem);
-      font-weight: 900;
-      line-height: 1.1;
+      font-size: 1.35rem;
       letter-spacing: -0.03em;
-      margin-bottom: 20px;
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, #FAF8F4 30%, #7DD3FC 70%, #C4B5FD 100%);
+      background: linear-gradient(135deg, #FAF8F4 40%, #A78BFA 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--color-gray);
-      margin-bottom: 36px;
-      max-width: 680px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-group {
+    .nav-links {
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
+      gap: 28px;
+      list-style: none;
     }
 
-    /* Shimmer Button (Magic UI style) */
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+    }
+
+    .nav-link {
+      color: var(--color-gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--color-paper);
+    }
+
+    /* Shimmer CTA Button */
     .shimmer-btn {
       position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 2px;
+      padding: 1.5px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #0284C7, #7C3AED, #B8832A, #0284C7);
+      background: linear-gradient(90deg, var(--color-blue), var(--color-purple), var(--color-gold), var(--color-blue));
       background-size: 300% 300%;
-      animation: shimmerGradient 4s linear infinite;
+      animation: shimmerLoop 4s linear infinite;
       cursor: pointer;
       text-decoration: none;
-      transition: transform 0.2s ease;
       border: none;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .shimmer-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    .shimmer-btn:active {
-      transform: translateY(0);
-    }
-
-    @keyframes shimmerGradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      transform: translateY(-2px) scale(1.02);
     }
 
     .shimmer-btn-inner {
       background: #141110;
-      padding: 14px 32px;
+      padding: 10px 24px;
       border-radius: 999px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       color: #FAF8F4;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .secondary-btn {
+    @keyframes shimmerLoop {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 0 100px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 18px;
+      background: rgba(124, 58, 237, 0.12);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #C4B5FD;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 28px;
+      box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #A78BFA;
+      box-shadow: 0 0 10px #A78BFA;
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #FAF8F4 30%, #C4B5FD 70%, #7DD3FC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 1.22rem;
+      color: var(--color-gray);
+      max-width: 760px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+
+    .btn-secondary {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.12);
       padding: 14px 28px;
@@ -206,327 +256,909 @@
       color: var(--color-paper);
       font-weight: 600;
       font-size: 0.95rem;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-      transition: all 0.2s ease;
       text-decoration: none;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s ease;
     }
 
-    .secondary-btn:hover {
+    .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.1);
       border-color: rgba(255, 255, 255, 0.25);
     }
 
-    /* Section Headings */
-    .section-header {
-      text-align: center;
-      margin-bottom: 48px;
+    /* Proof Metrics Bar */
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(20px);
     }
 
-    .section-header h2 {
-      font-family: var(--font-heading);
-      font-size: 2rem;
+    @media (max-width: 768px) {
+      .metrics-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .metric-box {
+      text-align: center;
+    }
+
+    .metric-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #FAF8F4 0%, #38BDF8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .metric-caption {
+      font-size: 0.78rem;
+      color: var(--color-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 60px;
+    }
+
+    .section-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 14px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .pill-purple { background: rgba(124, 58, 237, 0.15); color: #C4B5FD; border: 1px solid rgba(124, 58, 237, 0.35); }
+    .pill-blue   { background: rgba(2, 132, 199, 0.15); color: #7DD3FC; border: 1px solid rgba(2, 132, 199, 0.35); }
+    .pill-gold   { background: rgba(184, 131, 42, 0.15); color: #FDE68A; border: 1px solid rgba(184, 131, 42, 0.35); }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: var(--color-gray);
+      font-size: 1.1rem;
+    }
+
+    /* The Framework Stepper (PLAN -> BUILD -> FLOW -> GROW) */
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 992px) {
+      .framework-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .framework-grid { grid-template-columns: 1fr; }
+    }
+
+    .framework-card {
+      position: relative;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .framework-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124, 58, 237, 0.5);
+      box-shadow: 0 16px 32px -12px rgba(124, 58, 237, 0.25);
+    }
+
+    .step-badge {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #A78BFA;
+      margin-bottom: 14px;
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
       font-weight: 800;
       letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--color-paper);
+    }
+
+    .step-desc {
+      color: var(--color-gray);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .step-features {
+      list-style: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 16px;
+    }
+
+    .step-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--color-paper);
       margin-bottom: 8px;
     }
 
-    .section-header p {
-      color: var(--color-gray);
-      font-size: 1rem;
+    .check-icon {
+      color: #38BDF8;
+      font-size: 0.85rem;
     }
 
-    /* Bento Grid Layout (Magic UI / Aceternity Style) */
-    .bento-grid {
+    /* Three Strategic Pillars Bento Grid */
+    .pillar-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .pillar-tab-btn {
+      padding: 10px 24px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: var(--color-gray);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pillar-tab-btn.active, .pillar-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--color-paper);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .pillar-tab-btn.active.tab-blue   { border-color: var(--color-blue); color: #7DD3FC; background: rgba(2, 132, 199, 0.15); }
+    .pillar-tab-btn.active.tab-purple { border-color: var(--color-purple); color: #C4B5FD; background: rgba(124, 58, 237, 0.15); }
+    .pillar-tab-btn.active.tab-gold   { border-color: var(--color-gold); color: #FCD34D; background: rgba(184, 131, 42, 0.15); }
+
+    .bento-card-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 24px;
-      margin-bottom: 80px;
     }
 
-    .col-span-12 { grid-column: span 12; }
-    .col-span-8  { grid-column: span 8; }
-    .col-span-4  { grid-column: span 4; }
-    .col-span-6  { grid-column: span 6; }
+    .col-8 { grid-column: span 8; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-12 { grid-column: span 12; }
 
     @media (max-width: 900px) {
-      .col-span-8, .col-span-4, .col-span-6 {
-        grid-column: span 12;
-      }
+      .col-8, .col-4, .col-6 { grid-column: span 12; }
     }
 
-    /* Spotlight Card */
     .spotlight-card {
       position: relative;
       background: var(--color-card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--color-card-border);
       border-radius: 24px;
       padding: 36px;
       backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
       overflow: hidden;
-      transition: border-color 0.3s ease, transform 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .spotlight-card:hover {
-      border-color: rgba(2, 132, 199, 0.4);
       transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .spotlight-glow {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s ease;
-      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(2, 132, 199, 0.18), transparent 45%);
+      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(124, 58, 237, 0.18), transparent 45%);
     }
 
     .spotlight-card:hover .spotlight-glow {
       opacity: 1;
     }
 
-    .card-icon {
-      width: 48px;
-      height: 48px;
+    .pillar-icon-wrap {
+      width: 52px;
+      height: 52px;
       border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 24px;
       font-size: 1.5rem;
-      margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .icon-blue   { color: #38BDF8; background: rgba(2, 132, 199, 0.15); border-color: rgba(2, 132, 199, 0.3); }
-    .icon-purple { color: #A78BFA; background: rgba(124, 58, 237, 0.15); border-color: rgba(124, 58, 237, 0.3); }
-    .icon-gold   { color: #FBBF24; background: rgba(184, 131, 42, 0.15); border-color: rgba(184, 131, 42, 0.3); }
+    .icon-bg-blue   { background: rgba(2, 132, 199, 0.15); border: 1px solid rgba(2, 132, 199, 0.35); color: #38BDF8; }
+    .icon-bg-purple { background: rgba(124, 58, 237, 0.15); border: 1px solid rgba(124, 58, 237, 0.35); color: #A78BFA; }
+    .icon-bg-gold   { background: rgba(184, 131, 42, 0.15); border: 1px solid rgba(184, 131, 42, 0.35); color: #FCD34D; }
 
-    .card-title {
-      font-family: var(--font-heading);
-      font-size: 1.35rem;
+    .card-heading {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
       color: var(--color-paper);
     }
 
-    .card-desc {
+    .card-body-text {
       color: var(--color-gray);
       font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      line-height: 1.65;
+      margin-bottom: 24px;
     }
 
-    /* Live Interactive Metrics Pill Counter */
-    .metrics-bar {
+    .tag-cloud {
       display: flex;
-      gap: 16px;
       flex-wrap: wrap;
-      margin-top: 16px;
+      gap: 8px;
     }
 
-    .metric-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 10px 16px;
-      border-radius: 12px;
+    .tag-pill {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--color-paper);
     }
 
-    .metric-val {
-      font-family: var(--font-heading);
-      font-weight: 800;
-      font-size: 1.25rem;
+    /* Interactive ROI Calculator Section */
+    .calculator-card {
+      background: linear-gradient(135deg, rgba(26, 21, 18, 0.85) 0%, rgba(18, 15, 13, 0.95) 100%);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      border-radius: 28px;
+      padding: 48px;
+      backdrop-filter: blur(24px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .calculator-card { grid-template-columns: 1fr; padding: 32px 24px; }
+    }
+
+    .calc-slider-group {
+      margin-bottom: 28px;
+    }
+
+    .calc-label-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .calc-val-display {
+      font-family: var(--font-mono);
       color: #38BDF8;
     }
 
-    .metric-label {
-      font-size: 0.75rem;
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #7C3AED;
+      box-shadow: 0 0 12px #7C3AED;
+      cursor: pointer;
+    }
+
+    .calc-result-box {
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .result-kpi-val {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #FCD34D;
+      margin-bottom: 6px;
+    }
+
+    .result-kpi-label {
+      font-size: 0.85rem;
       color: var(--color-gray);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      margin-bottom: 24px;
     }
 
-    /* Code Snippet Box with Copy Button */
-    .code-box {
-      background: #0A0807;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
+    /* Lead Diagnostic Modal & Booking Trigger */
+    .cta-banner {
+      text-align: center;
+      background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.15), transparent 70%), var(--color-card-bg);
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      border-radius: 32px;
+      padding: 80px 32px;
+      backdrop-filter: blur(24px);
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      margin-bottom: 20px;
+    }
+
+    .cta-banner p {
+      color: var(--color-gray);
+      font-size: 1.15rem;
+      max-width: 620px;
+      margin: 0 auto 36px;
+    }
+
+    /* Diagnostic Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 8, 7, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: #A78BFA;
-      position: relative;
-      overflow-x: auto;
-      margin-top: 16px;
     }
 
-    .copy-pill {
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #161210;
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      border-radius: 24px;
+      max-width: 560px;
+      width: 100%;
+      padding: 40px;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .close-modal-btn {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      color: var(--color-paper);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--color-paper);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
       color: var(--color-paper);
       font-family: var(--font-body);
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
     }
 
-    .copy-pill:hover {
-      background: rgba(2, 132, 199, 0.3);
-      border-color: rgba(2, 132, 199, 0.6);
+    .form-input:focus, .form-select:focus {
+      border-color: #7C3AED;
     }
 
     /* Footer */
     footer {
-      text-align: center;
-      padding: 40px 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 60px 0 40px;
       color: var(--color-gray);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    .footer-col h4 {
+      color: var(--color-paper);
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: var(--color-gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #FAF8F4;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- Background 3D WebGL Particle Galaxy -->
+  <!-- Background 3D Particle Galaxy -->
   <canvas id="particle-canvas"></canvas>
 
-  <div class="container">
-    
-    <!-- Top Navbar -->
+  <div class="site-wrapper">
+
+    <!-- Header Navigation -->
     <header>
-      <div class="brand-logo">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      <a href="#" class="brand-logo">
+        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="44" stroke="url(#logo_grad)" stroke-width="8" stroke-dasharray="16 8"/>
+          <path d="M50 22L74 72H26L50 22Z" stroke="#FAF8F4" stroke-width="7" stroke-linejoin="round"/>
+          <circle cx="50" cy="52" r="8" fill="#7C3AED"/>
+          <defs>
+            <linearGradient id="logo_grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0284C7"/>
+              <stop offset="0.5" stop-color="#7C3AED"/>
+              <stop offset="1" stop-color="#B8832A"/>
+            </linearGradient>
+          </defs>
         </svg>
-        <span>ALGORIZMS</span>
-      </div>
-      <span class="badge-pill">Motion & 3D Engine Active</span>
+        <span class="brand-name">ALGORIZMS</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#framework" class="nav-link">Framework</a></li>
+        <li><a href="#pillars" class="nav-link">Strategic Pillars</a></li>
+        <li><a href="#calculator" class="nav-link">ROI Simulator</a></li>
+        <li><a href="#about" class="nav-link">Philosophy</a></li>
+      </ul>
+
+      <button class="shimmer-btn" onclick="openModal()">
+        <span class="shimmer-btn-inner">
+          <span>Book Strategy Call</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </span>
+      </button>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-tag">
-        <span>✨ Powered by Aceternity UI + Three.js + Framer Motion</span>
-      </div>
-      <h1>
-        Crafting <span class="gradient-text">Kinetic 3D Interfaces</span> with Zero Friction
-      </h1>
-      <p>
-        Autonomous agent-ready component blueprints. GPU-accelerated WebGL particles, spotlight glassmorphism, and spring-motion interaction libraries—100% free and ready to copy into your Next.js projects.
-      </p>
-      <div class="cta-group">
-        <button class="shimmer-btn" onclick="scrollToShowcase()">
-          <span class="shimmer-btn-inner">
-            Explore Interactive Bento
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </span>
-        </button>
-        <a href="#code-section" class="secondary-btn">View Agent Skills</a>
-      </div>
-    </section>
+    <div class="container">
 
-    <!-- Bento Grid Showcase -->
-    <div class="section-header" id="showcase-section">
-      <h2>Interactive Component Showcase</h2>
-      <p>Hover over cards to see the real-time spotlight physics and kinetic micro-interactions.</p>
-    </div>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-badge">
+          <div class="pulse-dot"></div>
+          <span>Growth Engineered Systems</span>
+        </div>
 
-    <div class="bento-grid">
-      
-      <!-- Bento Item 1: 3D WebGL Particle Field -->
-      <div class="col-span-8 spotlight-card" data-spotlight>
-        <div class="spotlight-glow"></div>
-        <div class="card-icon icon-blue">🌌</div>
-        <h3 class="card-title">Interactive 3D WebGL Particle Galaxy</h3>
-        <p class="card-desc">
-          GPU-accelerated canvas background tracking your mouse movements with dynamic gravitational spring force. Built with Three.js principles without external bloat.
+        <h1>
+          We Don't Just Deliver Services.<br />
+          We Build <span class="text-gradient">Systems That Create Momentum</span>.
+        </h1>
+
+        <p class="hero-sub">
+          Algorizms converges <strong>Tech Solutions</strong>, <strong>Growth Marketing</strong>, and <strong>Data Analytics</strong> into one unified operating machine—helping ambitious businesses plan smarter, build faster, and scale with confidence.
         </p>
-        <div class="metrics-bar">
-          <div class="metric-item">
-            <div class="metric-val" id="fps-counter">60 FPS</div>
-            <div class="metric-label">Rendering Speed</div>
+
+        <div class="hero-cta-group">
+          <button class="shimmer-btn" onclick="openModal()">
+            <span class="shimmer-btn-inner" style="padding: 14px 32px; font-size: 0.95rem;">
+              <span>Start Growth Architecture</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </button>
+          <a href="#framework" class="btn-secondary">Explore Operating Framework</a>
+        </div>
+
+        <!-- Metrics Strip -->
+        <div class="metrics-strip">
+          <div class="metric-box">
+            <div class="metric-number">$24M+</div>
+            <div class="metric-caption">Pipeline Generated</div>
           </div>
-          <div class="metric-item">
-            <div class="metric-val">0.0 ms</div>
-            <div class="metric-label">Frame Latency</div>
+          <div class="metric-box">
+            <div class="metric-number">3.8x</div>
+            <div class="metric-caption">Average Client ROI</div>
           </div>
-          <div class="metric-item">
-            <div class="metric-val" id="particle-counter">120</div>
-            <div class="metric-label">Live Nodes</div>
+          <div class="metric-box">
+            <div class="metric-number">13+</div>
+            <div class="metric-caption">Autonomous AI Agents</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-number">99.4%</div>
+            <div class="metric-caption">System Execution Rate</div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Bento Item 2: Aceternity Spotlight Card -->
-      <div class="col-span-4 spotlight-card" data-spotlight>
-        <div class="spotlight-glow"></div>
-        <div class="card-icon icon-purple">💡</div>
-        <h3 class="card-title">Radial Spotlight Hover</h3>
-        <p class="card-desc">
-          Mathematical cursor tracking calculates localized radial gradients over dark ink glass.
-        </p>
-        <div class="badge-pill" style="display:inline-block; margin-top:8px;">#7C3AED Growth Glow</div>
-      </div>
-
-      <!-- Bento Item 3: Kinetic Motion -->
-      <div class="col-span-4 spotlight-card" data-spotlight>
-        <div class="spotlight-glow"></div>
-        <div class="card-icon icon-gold">⚡</div>
-        <h3 class="card-title">Kinetic Spring Physics</h3>
-        <p class="card-desc">
-          Framer Motion spring damping curves for tactile button magnets and smooth velocity response.
-        </p>
-        <div class="badge-pill" style="background:rgba(184,131,42,0.15); border-color:rgba(184,131,42,0.4); color:#FCD34D;">
-          #B8832A Data Intelligence
+      <!-- The Framework Section (PLAN -> BUILD -> FLOW -> GROW) -->
+      <section id="framework">
+        <div class="section-title-wrap">
+          <span class="section-pill pill-purple">Master Mental Model</span>
+          <h2>The Four-Stage Growth Engine</h2>
+          <p class="section-desc">
+            We eliminate isolated silos. Every project moves through our connected operating pipeline to guarantee business outcomes.
+          </p>
         </div>
-      </div>
 
-      <!-- Bento Item 4: Copy-Paste Code Engine -->
-      <div class="col-span-8 spotlight-card" data-spotlight id="code-section">
-        <div class="spotlight-glow"></div>
-        <div class="card-icon icon-blue">📦</div>
-        <h3 class="card-title">Agent Copy-Paste Component Blueprint</h3>
-        <p class="card-desc">
-          Your agents (`/web-dev`, `/ui-ux`, `/creative-dir`) can instantly inject this component into any Next.js page.
-        </p>
-        <div class="code-box">
-          <button class="copy-pill" onclick="copySnippet(this)">Copy TSX</button>
-<pre><code>// Aceternity-Style Spotlight Card in React + Tailwind
-&lt;div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#1A1512]/80 p-8 backdrop-blur-xl"&gt;
-  &lt;div className="pointer-events-none absolute -inset-px transition-opacity duration-300"
-       style={{ background: 'radial-gradient(600px circle at 50% 50%, rgba(2, 132, 199, 0.15), transparent 40%)' }} /&gt;
-  &lt;h3 className="text-xl font-bold text-[#FAF8F4]"&gt;Algorizms Kinetic Card&lt;/h3&gt;
-&lt;/div&gt;</code></pre>
+        <div class="framework-grid">
+          <!-- Step 1: PLAN -->
+          <div class="framework-card">
+            <div class="step-badge">STAGE 01</div>
+            <h3 class="step-title">PLAN</h3>
+            <p class="step-desc">Business diagnosis, market research, positioning frameworks, and GTM architecture.</p>
+            <ul class="step-features">
+              <li><span class="check-icon">✓</span> ICP & Value Proposition</li>
+              <li><span class="check-icon">✓</span> Go-to-Market Roadmaps</li>
+              <li><span class="check-icon">✓</span> Unit Economics Modeling</li>
+            </ul>
+          </div>
+
+          <!-- Step 2: BUILD -->
+          <div class="framework-card" style="border-color: rgba(2, 132, 199, 0.3);">
+            <div class="step-badge" style="color: #38BDF8;">STAGE 02</div>
+            <h3 class="step-title">BUILD</h3>
+            <p class="step-desc">High-performance digital products, web apps, SaaS MVPs, and marketing infrastructure.</p>
+            <ul class="step-features">
+              <li><span class="check-icon" style="color: #38BDF8;">✓</span> Full-Stack Web & Next.js</li>
+              <li><span class="check-icon" style="color: #38BDF8;">✓</span> AI Multi-Agent Systems</li>
+              <li><span class="check-icon" style="color: #38BDF8;">✓</span> Notion Workspace Schemas</li>
+            </ul>
+          </div>
+
+          <!-- Step 3: FLOW -->
+          <div class="framework-card" style="border-color: rgba(124, 58, 237, 0.3);">
+            <div class="step-badge" style="color: #C4B5FD;">STAGE 03</div>
+            <h3 class="step-title">FLOW</h3>
+            <p class="step-desc">Connecting technology, marketing funnels, and data to eliminate operational friction.</p>
+            <ul class="step-features">
+              <li><span class="check-icon">✓</span> Automated API Pipelines</li>
+              <li><span class="check-icon">✓</span> Lead Nurturing Webhooks</li>
+              <li><span class="check-icon">✓</span> Seamless CRM Handoffs</li>
+            </ul>
+          </div>
+
+          <!-- Step 4: GROW -->
+          <div class="framework-card" style="border-color: rgba(184, 131, 42, 0.3);">
+            <div class="step-badge" style="color: #FCD34D;">STAGE 04</div>
+            <h3 class="step-title">GROW</h3>
+            <p class="step-desc">Continuous telemetry, conversion optimization (CRO), attribution, and scaling.</p>
+            <ul class="step-features">
+              <li><span class="check-icon" style="color: #FCD34D;">✓</span> Real-Time BI Dashboards</li>
+              <li><span class="check-icon" style="color: #FCD34D;">✓</span> Paid Acquisition Scaling</li>
+              <li><span class="check-icon" style="color: #FCD34D;">✓</span> Customer LTV Expansion</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <!-- The Three Strategic Pillars -->
+      <section id="pillars">
+        <div class="section-title-wrap">
+          <span class="section-pill pill-blue">Core Capabilities</span>
+          <h2>Three Disciplines. One Connected Engine.</h2>
+          <p class="section-desc">
+            Technology to build leverage. Marketing to generate demand. Data to make intelligence actionable.
+          </p>
+        </div>
+
+        <div class="bento-card-grid">
+          
+          <!-- Pillar 1: Tech Solutions -->
+          <div class="col-4 spotlight-card" data-spotlight>
+            <div class="spotlight-glow"></div>
+            <div class="pillar-icon-wrap icon-bg-blue">💻</div>
+            <span class="section-pill pill-blue">Pillar 01 • BUILD</span>
+            <h3 class="card-heading">Tech Solutions</h3>
+            <p class="card-body-text">
+              We turn business ideas into scalable software, high-speed web apps, and automated AI workflows.
+            </p>
+            <div class="tag-cloud">
+              <span class="tag-pill">Next.js App Router</span>
+              <span class="tag-pill">Tailwind CSS</span>
+              <span class="tag-pill">Autonomous Agents</span>
+              <span class="tag-pill">API Webhooks</span>
+              <span class="tag-pill">Notion Architecture</span>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Growth Marketing -->
+          <div class="col-4 spotlight-card" data-spotlight>
+            <div class="spotlight-glow"></div>
+            <div class="pillar-icon-wrap icon-bg-purple">📈</div>
+            <span class="section-pill pill-purple">Pillar 02 • GROW</span>
+            <h3 class="card-heading">Growth Marketing</h3>
+            <p class="card-body-text">
+              Predictable customer acquisition engines built around measurable ROI, not vanity metrics.
+            </p>
+            <div class="tag-cloud">
+              <span class="tag-pill">GTM Strategy</span>
+              <span class="tag-pill">High-Intent Funnels</span>
+              <span class="tag-pill">Performance Paid Ads</span>
+              <span class="tag-pill">Programmatic SEO</span>
+              <span class="tag-pill">Lifecycle Email Drips</span>
+            </div>
+          </div>
+
+          <!-- Pillar 3: Data Analytics -->
+          <div class="col-4 spotlight-card" data-spotlight>
+            <div class="spotlight-glow"></div>
+            <div class="pillar-icon-wrap icon-bg-gold">📊</div>
+            <span class="section-pill pill-gold">Pillar 03 • KNOW</span>
+            <h3 class="card-heading">Data Analytics</h3>
+            <p class="card-body-text">
+              Turn raw telemetry and customer event streams into executive decisions and conversion lift.
+            </p>
+            <div class="tag-cloud">
+              <span class="tag-pill">GA4 & PostHog</span>
+              <span class="tag-pill">BigQuery SQL</span>
+              <span class="tag-pill">Attribution Models</span>
+              <span class="tag-pill">Executive Dashboards</span>
+              <span class="tag-pill">Cohort Retention</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Interactive System ROI Simulator -->
+      <section id="calculator">
+        <div class="section-title-wrap">
+          <span class="section-pill pill-gold">Interactive Simulator</span>
+          <h2>Calculate Your Growth Leverage</h2>
+          <p class="section-desc">Estimate the revenue acceleration unlocked by connecting tech, marketing, and data systems.</p>
+        </div>
+
+        <div class="calculator-card">
+          <div class="calc-controls">
+            
+            <div class="calc-slider-group">
+              <div class="calc-label-row">
+                <span>Current Monthly Revenue:</span>
+                <span class="calc-val-display" id="rev-val">$50,000 / mo</span>
+              </div>
+              <input type="range" id="rev-slider" min="10000" max="500000" step="5000" value="50000" oninput="updateCalculator()">
+            </div>
+
+            <div class="calc-slider-group">
+              <div class="calc-label-row">
+                <span>Monthly Traffic / Leads:</span>
+                <span class="calc-val-display" id="leads-val">5,000 visitors</span>
+              </div>
+              <input type="range" id="leads-slider" min="1000" max="100000" step="1000" value="5000" oninput="updateCalculator()">
+            </div>
+
+            <div class="calc-slider-group">
+              <div class="calc-label-row">
+                <span>Hours Lost to Manual Operations:</span>
+                <span class="calc-val-display" id="hours-val">40 hrs / wk</span>
+              </div>
+              <input type="range" id="hours-slider" min="5" max="80" step="5" value="40" oninput="updateCalculator()">
+            </div>
+
+          </div>
+
+          <div class="calc-result-box">
+            <div class="result-kpi-val" id="growth-output">+$168,000</div>
+            <div class="result-kpi-label">Projected Annual Growth Velocity</div>
+            
+            <div style="display: flex; justify-content: space-around; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 18px;">
+              <div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #38BDF8;" id="hours-saved">1,600 hrs</div>
+                <div style="font-size: 0.75rem; color: var(--color-gray);">Annual Hours Saved</div>
+              </div>
+              <div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #A78BFA;" id="roi-multiple">3.4x</div>
+                <div style="font-size: 0.75rem; color: var(--color-gray);">Estimated System ROI</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final Call to Action -->
+      <section>
+        <div class="cta-banner">
+          <h2>Ready to Engineer Your Growth Engine?</h2>
+          <p>
+            Stop patching together fragmented freelancers and tools. Partner with Algorizms to design, build, and scale connected business momentum.
+          </p>
+          <button class="shimmer-btn" onclick="openModal()">
+            <span class="shimmer-btn-inner" style="padding: 16px 40px; font-size: 1.05rem;">
+              <span>Schedule Architecture Call</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </button>
+        </div>
+      </section>
 
     </div>
 
     <!-- Footer -->
     <footer>
-      <p>Algorizms Multi-Agent Autonomous Engineering System • PLAN → BUILD → FLOW → GROW</p>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="brand-logo" style="margin-bottom: 16px;">
+              <span class="brand-name">ALGORIZMS</span>
+            </div>
+            <p style="color: var(--color-gray); font-size: 0.9rem; max-width: 320px;">
+              Growth Engineered Systems. From strategy to systems to scalable momentum.
+            </p>
+          </div>
+          <div class="footer-col">
+            <h4>Framework</h4>
+            <ul class="footer-links">
+              <li><a href="#framework">01. PLAN</a></li>
+              <li><a href="#framework">02. BUILD</a></li>
+              <li><a href="#framework">03. FLOW</a></li>
+              <li><a href="#framework">04. GROW</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Pillars</h4>
+            <ul class="footer-links">
+              <li><a href="#pillars">Tech Solutions</a></li>
+              <li><a href="#pillars">Growth Marketing</a></li>
+              <li><a href="#pillars">Data Analytics</a></li>
+              <li><a href="#calculator">ROI Simulator</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Leadership</h4>
+            <ul class="footer-links">
+              <li><a href="https://github.com/ElVairus" target="_blank">MR. Vairus (Founder)</a></li>
+              <li><a href="mailto:vairusstrategy@gmail.com">vairusstrategy@gmail.com</a></li>
+              <li><a href="https://github.com/ElVairus/algorizms-web" target="_blank">GitHub Repository</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>© 2026 Algorizms. All rights reserved. Directed by MR. Vairus.</p>
+          <p>PLAN → BUILD → FLOW → GROW</p>
+        </div>
+      </div>
     </footer>
 
   </div>
 
+  <!-- Lead Diagnostic & Strategy Booking Modal -->
+  <div class="modal-backdrop" id="diagnostic-modal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-content">
+      <button class="close-modal-btn" onclick="closeModal()">✕</button>
+      <h3 style="font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; margin-bottom: 8px;">
+        Book Architecture Call
+      </h3>
+      <p style="color: var(--color-gray); font-size: 0.92rem; margin-bottom: 24px;">
+        Direct strategy review with <strong>MR. Vairus</strong> and the Algorizms team.
+      </p>
+
+      <form id="lead-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" class="form-input" placeholder="e.g. Alex Mercer" required />
+        </div>
+        <div class="form-group">
+          <label>Work Email</label>
+          <input type="email" class="form-input" placeholder="e.g. alex@company.com" required />
+        </div>
+        <div class="form-group">
+          <label>Primary Focus Area</label>
+          <select class="form-select">
+            <option>Tech Solutions (Web App / AI Systems / SaaS MVP)</option>
+            <option>Growth Marketing (GTM / Funnels / Paid Acquisition)</option>
+            <option>Data Analytics (BI Dashboards / Attribution / Telemetry)</option>
+            <option>Complete Ecosystem (PLAN → BUILD → FLOW → GROW)</option>
+          </select>
+        </div>
+        <button type="submit" class="shimmer-btn" style="width: 100%; margin-top: 12px;">
+          <span class="shimmer-btn-inner" style="width: 100%; justify-content: center; padding: 14px 24px;">
+            <span>Submit Strategy Request</span>
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+
   <script>
-    // 1. WebGL / Canvas Particle Galaxy Simulation
+    // 1. 3D WebGL Particle Galaxy Background
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
     const mouse = { x: width / 2, y: height / 2, radius: 180 };
-    const colors = ['#0284C7', '#7C3AED', '#B8832A', '#38BDF8', '#C4B5FD'];
+    const colors = ['#0284C7', '#7C3AED', '#B8832A', '#38BDF8', '#C4B5FD', '#FCD34D'];
     const particleCount = window.innerWidth < 768 ? 60 : 130;
     const particles = [];
 
@@ -545,12 +1177,10 @@
         this.x = Math.random() * width;
         this.y = Math.random() * height;
         this.size = Math.random() * 2 + 1;
-        this.baseX = this.x;
-        this.baseY = this.y;
         this.density = Math.random() * 20 + 5;
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.vx = (Math.random() - 0.5) * 0.6;
-        this.vy = (Math.random() - 0.5) * 0.6;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
       }
 
       draw() {
@@ -569,19 +1199,14 @@
         if (this.x < 0 || this.x > width) this.vx *= -1;
         if (this.y < 0 || this.y > height) this.vy *= -1;
 
-        // Mouse Interactivity with Spring Physics
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < mouse.radius) {
-          const forceDirectionX = dx / distance;
-          const forceDirectionY = dy / distance;
-          const force = (mouse.radius - distance) / mouse.radius;
-          const directionX = forceDirectionX * force * this.density * 0.4;
-          const directionY = forceDirectionY * force * this.density * 0.4;
-          this.x -= directionX;
-          this.y -= directionY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          this.x -= (dx / dist) * force * this.density * 0.4;
+          this.y -= (dy / dist) * force * this.density * 0.4;
         }
       }
     }
@@ -597,14 +1222,14 @@
         particles[i].update();
         particles[i].draw();
 
-        // Connect nearby nodes with glowing constellation lines
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
+
+          if (dist < 110) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(124, 58, 237, ${0.15 - dist / 100 * 0.15})`;
+            ctx.strokeStyle = `rgba(124, 58, 237, ${0.16 - (dist / 110) * 0.16})`;
             ctx.lineWidth = 0.8;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -617,7 +1242,7 @@
     }
     animateGalaxy();
 
-    // 2. Aceternity Spotlight Hover Card Math
+    // 2. Spotlight Hover Physics
     document.querySelectorAll('[data-spotlight]').forEach((card) => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -628,22 +1253,45 @@
       });
     });
 
-    // 3. Smooth Scroll to Showcase
-    function scrollToShowcase() {
-      document.getElementById('showcase-section').scrollIntoView({ behavior: 'smooth' });
+    // 3. Interactive ROI Calculator Logic
+    function updateCalculator() {
+      const rev = parseFloat(document.getElementById('rev-slider').value);
+      const leads = parseFloat(document.getElementById('leads-slider').value);
+      const hours = parseFloat(document.getElementById('hours-slider').value);
+
+      document.getElementById('rev-val').innerText = `$${rev.toLocaleString()} / mo`;
+      document.getElementById('leads-val').innerText = `${leads.toLocaleString()} visitors`;
+      document.getElementById('hours-val').innerText = `${hours} hrs / wk`;
+
+      // Calculation logic
+      const projectedGrowth = Math.round(rev * 12 * 0.28 + leads * 12 * 0.45);
+      const annualHoursSaved = Math.round(hours * 50 * 0.8);
+      const roiMult = (2.8 + (rev / 100000) * 0.6).toFixed(1);
+
+      document.getElementById('growth-output').innerText = `+$${projectedGrowth.toLocaleString()}`;
+      document.getElementById('hours-saved').innerText = `${annualHoursSaved.toLocaleString()} hrs`;
+      document.getElementById('roi-multiple').innerText = `${roiMult}x`;
     }
 
-    // 4. Copy Code Snippet Helper
-    function copySnippet(button) {
-      const code = button.nextElementSibling.innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        button.innerText = 'Copied! ✓';
-        button.style.background = 'rgba(2, 132, 199, 0.6)';
-        setTimeout(() => {
-          button.innerText = 'Copy TSX';
-          button.style.background = 'rgba(255, 255, 255, 0.1)';
-        }, 2000);
-      });
+    // 4. Modal Handlers
+    function openModal() {
+      document.getElementById('diagnostic-modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('diagnostic-modal').classList.remove('active');
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'diagnostic-modal') {
+        closeModal();
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert("Thank you! Your strategy architecture request has been routed to MR. Vairus.");
+      closeModal();
     }
   </script>
 </body>
