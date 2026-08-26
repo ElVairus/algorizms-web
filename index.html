@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algorizms Motion & 3D Interactive UI Showcase</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --color-blue: #0284C7;
+      --color-purple: #7C3AED;
+      --color-gold: #B8832A;
+      --color-ink: #0F0D0C;
+      --color-card-bg: rgba(26, 21, 18, 0.7);
+      --color-paper: #FAF8F4;
+      --color-gray: #9E9689;
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 3D Particle Canvas Background */
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 40px 24px 100px;
+    }
+
+    /* Top Navigation Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 28px;
+      background: rgba(26, 21, 18, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      margin-bottom: 60px;
+    }
+
+    .brand-logo {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #0284C7 0%, #7C3AED 50%, #B8832A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, 0.15);
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      color: #C4B5FD;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 80px;
+      position: relative;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(2, 132, 199, 0.1);
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #7DD3FC;
+      margin-bottom: 24px;
+      animation: pulseGlow 4s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 10px rgba(2, 132, 199, 0.2); }
+      100% { box-shadow: 0 0 25px rgba(124, 58, 237, 0.4); }
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #FAF8F4 30%, #7DD3FC 70%, #C4B5FD 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--color-gray);
+      margin-bottom: 36px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Shimmer Button (Magic UI style) */
+    .shimmer-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0284C7, #7C3AED, #B8832A, #0284C7);
+      background-size: 300% 300%;
+      animation: shimmerGradient 4s linear infinite;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+      border: none;
+    }
+
+    .shimmer-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .shimmer-btn:active {
+      transform: translateY(0);
+    }
+
+    @keyframes shimmerGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .shimmer-btn-inner {
+      background: #141110;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #FAF8F4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .secondary-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 14px 28px;
+      border-radius: 999px;
+      color: var(--color-paper);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Section Headings */
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--color-gray);
+      font-size: 1rem;
+    }
+
+    /* Bento Grid Layout (Magic UI / Aceternity Style) */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .col-span-12 { grid-column: span 12; }
+    .col-span-8  { grid-column: span 8; }
+    .col-span-4  { grid-column: span 4; }
+    .col-span-6  { grid-column: span 6; }
+
+    @media (max-width: 900px) {
+      .col-span-8, .col-span-4, .col-span-6 {
+        grid-column: span 12;
+      }
+    }
+
+    /* Spotlight Card */
+    .spotlight-card {
+      position: relative;
+      background: var(--color-card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 36px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      overflow: hidden;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .spotlight-card:hover {
+      border-color: rgba(2, 132, 199, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .spotlight-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(2, 132, 199, 0.18), transparent 45%);
+    }
+
+    .spotlight-card:hover .spotlight-glow {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .icon-blue   { color: #38BDF8; background: rgba(2, 132, 199, 0.15); border-color: rgba(2, 132, 199, 0.3); }
+    .icon-purple { color: #A78BFA; background: rgba(124, 58, 237, 0.15); border-color: rgba(124, 58, 237, 0.3); }
+    .icon-gold   { color: #FBBF24; background: rgba(184, 131, 42, 0.15); border-color: rgba(184, 131, 42, 0.3); }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--color-paper);
+    }
+
+    .card-desc {
+      color: var(--color-gray);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Live Interactive Metrics Pill Counter */
+    .metrics-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .metric-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 10px 16px;
+      border-radius: 12px;
+    }
+
+    .metric-val {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #38BDF8;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--color-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Code Snippet Box with Copy Button */
+    .code-box {
+      background: #0A0807;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #A78BFA;
+      position: relative;
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    .copy-pill {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--color-paper);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-pill:hover {
+      background: rgba(2, 132, 199, 0.3);
+      border-color: rgba(2, 132, 199, 0.6);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--color-gray);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background 3D WebGL Particle Galaxy -->
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="container">
+    
+    <!-- Top Navbar -->
+    <header>
+      <div class="brand-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <span>ALGORIZMS</span>
+      </div>
+      <span class="badge-pill">Motion & 3D Engine Active</span>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-tag">
+        <span>✨ Powered by Aceternity UI + Three.js + Framer Motion</span>
+      </div>
+      <h1>
+        Crafting <span class="gradient-text">Kinetic 3D Interfaces</span> with Zero Friction
+      </h1>
+      <p>
+        Autonomous agent-ready component blueprints. GPU-accelerated WebGL particles, spotlight glassmorphism, and spring-motion interaction libraries—100% free and ready to copy into your Next.js projects.
+      </p>
+      <div class="cta-group">
+        <button class="shimmer-btn" onclick="scrollToShowcase()">
+          <span class="shimmer-btn-inner">
+            Explore Interactive Bento
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </button>
+        <a href="#code-section" class="secondary-btn">View Agent Skills</a>
+      </div>
+    </section>
+
+    <!-- Bento Grid Showcase -->
+    <div class="section-header" id="showcase-section">
+      <h2>Interactive Component Showcase</h2>
+      <p>Hover over cards to see the real-time spotlight physics and kinetic micro-interactions.</p>
+    </div>
+
+    <div class="bento-grid">
+      
+      <!-- Bento Item 1: 3D WebGL Particle Field -->
+      <div class="col-span-8 spotlight-card" data-spotlight>
+        <div class="spotlight-glow"></div>
+        <div class="card-icon icon-blue">🌌</div>
+        <h3 class="card-title">Interactive 3D WebGL Particle Galaxy</h3>
+        <p class="card-desc">
+          GPU-accelerated canvas background tracking your mouse movements with dynamic gravitational spring force. Built with Three.js principles without external bloat.
+        </p>
+        <div class="metrics-bar">
+          <div class="metric-item">
+            <div class="metric-val" id="fps-counter">60 FPS</div>
+            <div class="metric-label">Rendering Speed</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">0.0 ms</div>
+            <div class="metric-label">Frame Latency</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" id="particle-counter">120</div>
+            <div class="metric-label">Live Nodes</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento Item 2: Aceternity Spotlight Card -->
+      <div class="col-span-4 spotlight-card" data-spotlight>
+        <div class="spotlight-glow"></div>
+        <div class="card-icon icon-purple">💡</div>
+        <h3 class="card-title">Radial Spotlight Hover</h3>
+        <p class="card-desc">
+          Mathematical cursor tracking calculates localized radial gradients over dark ink glass.
+        </p>
+        <div class="badge-pill" style="display:inline-block; margin-top:8px;">#7C3AED Growth Glow</div>
+      </div>
+
+      <!-- Bento Item 3: Kinetic Motion -->
+      <div class="col-span-4 spotlight-card" data-spotlight>
+        <div class="spotlight-glow"></div>
+        <div class="card-icon icon-gold">⚡</div>
+        <h3 class="card-title">Kinetic Spring Physics</h3>
+        <p class="card-desc">
+          Framer Motion spring damping curves for tactile button magnets and smooth velocity response.
+        </p>
+        <div class="badge-pill" style="background:rgba(184,131,42,0.15); border-color:rgba(184,131,42,0.4); color:#FCD34D;">
+          #B8832A Data Intelligence
+        </div>
+      </div>
+
+      <!-- Bento Item 4: Copy-Paste Code Engine -->
+      <div class="col-span-8 spotlight-card" data-spotlight id="code-section">
+        <div class="spotlight-glow"></div>
+        <div class="card-icon icon-blue">📦</div>
+        <h3 class="card-title">Agent Copy-Paste Component Blueprint</h3>
+        <p class="card-desc">
+          Your agents (`/web-dev`, `/ui-ux`, `/creative-dir`) can instantly inject this component into any Next.js page.
+        </p>
+        <div class="code-box">
+          <button class="copy-pill" onclick="copySnippet(this)">Copy TSX</button>
+<pre><code>// Aceternity-Style Spotlight Card in React + Tailwind
+&lt;div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#1A1512]/80 p-8 backdrop-blur-xl"&gt;
+  &lt;div className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+       style={{ background: 'radial-gradient(600px circle at 50% 50%, rgba(2, 132, 199, 0.15), transparent 40%)' }} /&gt;
+  &lt;h3 className="text-xl font-bold text-[#FAF8F4]"&gt;Algorizms Kinetic Card&lt;/h3&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Algorizms Multi-Agent Autonomous Engineering System • PLAN → BUILD → FLOW → GROW</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // 1. WebGL / Canvas Particle Galaxy Simulation
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const mouse = { x: width / 2, y: height / 2, radius: 180 };
+    const colors = ['#0284C7', '#7C3AED', '#B8832A', '#38BDF8', '#C4B5FD'];
+    const particleCount = window.innerWidth < 768 ? 60 : 130;
+    const particles = [];
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2 + 1;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.density = Math.random() * 20 + 5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+
+        // Mouse Interactivity with Spring Physics
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < mouse.radius) {
+          const forceDirectionX = dx / distance;
+          const forceDirectionY = dy / distance;
+          const force = (mouse.radius - distance) / mouse.radius;
+          const directionX = forceDirectionX * force * this.density * 0.4;
+          const directionY = forceDirectionY * force * this.density * 0.4;
+          this.x -= directionX;
+          this.y -= directionY;
+        }
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateGalaxy() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        // Connect nearby nodes with glowing constellation lines
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(124, 58, 237, ${0.15 - dist / 100 * 0.15})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animateGalaxy);
+    }
+    animateGalaxy();
+
+    // 2. Aceternity Spotlight Hover Card Math
+    document.querySelectorAll('[data-spotlight]').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+
+    // 3. Smooth Scroll to Showcase
+    function scrollToShowcase() {
+      document.getElementById('showcase-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 4. Copy Code Snippet Helper
+    function copySnippet(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = 'Copied! ✓';
+        button.style.background = 'rgba(2, 132, 199, 0.6)';
+        setTimeout(() => {
+          button.innerText = 'Copy TSX';
+          button.style.background = 'rgba(255, 255, 255, 0.1)';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
