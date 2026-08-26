@@ -9,13 +9,13 @@
   <!-- Google Fonts: Space Grotesk, Outfit, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
       /* Brand Color Tokens */
       --color-ink: #120F0D;
-      --color-card-bg: rgba(26, 21, 18, 0.75);
+      --color-card-bg: rgba(26, 21, 18, 0.78);
       --color-card-border: rgba(255, 255, 255, 0.09);
       --color-paper: #FAF8F4;
       --color-gray: #9E9689;
@@ -79,9 +79,9 @@
       top: 20px;
       z-index: 100;
       margin: 20px auto 40px;
-      max-width: 1200px;
-      padding: 14px 28px;
-      background: rgba(18, 15, 13, 0.75);
+      max-width: 1240px;
+      padding: 12px 28px;
+      background: rgba(18, 15, 13, 0.82);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid var(--color-card-border);
@@ -95,41 +95,61 @@
     .brand-logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       text-decoration: none;
       color: var(--color-paper);
     }
 
-    .logo-symbol {
-      width: 32px;
-      height: 32px;
+    .brand-logo-img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(184, 131, 42, 0.4));
+      transition: transform 0.3s ease;
+    }
+
+    .brand-logo:hover .brand-logo-img {
+      transform: scale(1.08) rotate(3deg);
+    }
+
+    .brand-text-block {
+      display: flex;
+      flex-direction: column;
     }
 
     .brand-name {
       font-family: var(--font-display);
       font-weight: 800;
-      font-size: 1.35rem;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #FAF8F4 40%, #A78BFA 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 1.25rem;
+      letter-spacing: 0.12em;
+      color: #FAF8F4;
+      line-height: 1.1;
+    }
+
+    .brand-tagline-sub {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: #FCD34D;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 26px;
       list-style: none;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 992px) {
       .nav-links { display: none; }
     }
 
     .nav-link {
       color: var(--color-gray);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
       transition: color 0.2s ease;
     }
@@ -180,16 +200,31 @@
     /* Hero Section */
     .hero {
       text-align: center;
-      padding: 60px 0 100px;
-      max-width: 960px;
+      padding: 50px 0 90px;
+      max-width: 1020px;
       margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-emblem-center {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 28px;
+      display: block;
+      filter: drop-shadow(0 0 35px rgba(252, 211, 77, 0.45));
+      animation: floatLogo 6s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 6px 18px;
+      padding: 6px 20px;
       background: rgba(124, 58, 237, 0.12);
       border: 1px solid rgba(124, 58, 237, 0.35);
       border-radius: 999px;
@@ -197,17 +232,17 @@
       font-weight: 600;
       color: #C4B5FD;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 28px;
-      box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+      letter-spacing: 0.08em;
+      margin-bottom: 24px;
+      box-shadow: 0 0 24px rgba(124, 58, 237, 0.2);
     }
 
     .pulse-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #A78BFA;
-      box-shadow: 0 0 10px #A78BFA;
+      background: #FCD34D;
+      box-shadow: 0 0 10px #FCD34D;
       animation: pulseDot 2s infinite;
     }
 
@@ -226,7 +261,7 @@
     }
 
     .text-gradient {
-      background: linear-gradient(135deg, #FAF8F4 30%, #C4B5FD 70%, #7DD3FC 100%);
+      background: linear-gradient(135deg, #FAF8F4 30%, #FCD34D 70%, #A78BFA 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -234,7 +269,7 @@
     .hero-sub {
       font-size: 1.22rem;
       color: var(--color-gray);
-      max-width: 760px;
+      max-width: 800px;
       margin: 0 auto 40px;
       line-height: 1.65;
     }
@@ -266,7 +301,7 @@
       border-color: rgba(255, 255, 255, 0.25);
     }
 
-    /* Proof Metrics Bar */
+    /* Proof Metrics Strip */
     .metrics-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -291,7 +326,7 @@
       font-size: 2.2rem;
       font-weight: 800;
       letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #FAF8F4 0%, #38BDF8 100%);
+      background: linear-gradient(135deg, #FAF8F4 0%, #FCD34D 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -307,13 +342,13 @@
 
     /* Section Styling */
     section {
-      padding: 100px 0;
+      padding: 90px 0;
     }
 
     .section-title-wrap {
       text-align: center;
-      max-width: 720px;
-      margin: 0 auto 60px;
+      max-width: 760px;
+      margin: 0 auto 56px;
     }
 
     .section-pill {
@@ -343,6 +378,84 @@
     .section-desc {
       color: var(--color-gray);
       font-size: 1.1rem;
+    }
+
+    /* About Us / Company Profile Grid */
+    .about-overview-card {
+      background: linear-gradient(135deg, rgba(26, 21, 18, 0.9) 0%, rgba(18, 15, 13, 0.95) 100%);
+      border: 1px solid rgba(252, 211, 77, 0.25);
+      border-radius: 28px;
+      padding: 48px;
+      backdrop-filter: blur(24px);
+      margin-bottom: 40px;
+    }
+
+    .quote-badge {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: #FAF8F4;
+      margin-bottom: 24px;
+      border-left: 4px solid #FCD34D;
+      padding-left: 20px;
+    }
+
+    .about-text {
+      color: var(--color-gray);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    /* 6 Key Differentiators Grid */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .diff-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .diff-grid { grid-template-columns: 1fr; }
+    }
+
+    .diff-card {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+    }
+
+    .diff-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(252, 211, 77, 0.4);
+    }
+
+    .diff-num {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #FCD34D;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .diff-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-paper);
+      margin-bottom: 8px;
+    }
+
+    .diff-desc {
+      color: var(--color-gray);
+      font-size: 0.92rem;
+      line-height: 1.6;
     }
 
     /* The Framework Stepper (PLAN -> BUILD -> FLOW -> GROW) */
@@ -420,50 +533,134 @@
       font-size: 0.85rem;
     }
 
-    /* Three Strategic Pillars Bento Grid */
-    .pillar-tabs {
+    /* Distinctive Case Studies Section (Our Work) */
+    .case-studies-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 1024px) {
+      .case-studies-grid { grid-template-columns: 1fr; }
+    }
+
+    .case-card {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 24px;
+      overflow: hidden;
       display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .case-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    }
+
+    .case-preview-box {
+      height: 200px;
+      background: #0D0B0A;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .pillar-tab-btn {
-      padding: 10px 24px;
+    .case-preview-gradient {
+      position: absolute;
+      inset: 0;
+      opacity: 0.25;
+      background-size: cover;
+    }
+
+    .case-metric-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      padding: 6px 14px;
+      background: rgba(18, 15, 13, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      color: var(--color-gray);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #FCD34D;
+    }
+
+    .case-body {
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .case-category {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38BDF8;
+      margin-bottom: 8px;
       font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
     }
 
-    .pillar-tab-btn.active, .pillar-tab-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .case-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       color: var(--color-paper);
-      border-color: rgba(255, 255, 255, 0.25);
+      margin-bottom: 12px;
     }
 
-    .pillar-tab-btn.active.tab-blue   { border-color: var(--color-blue); color: #7DD3FC; background: rgba(2, 132, 199, 0.15); }
-    .pillar-tab-btn.active.tab-purple { border-color: var(--color-purple); color: #C4B5FD; background: rgba(124, 58, 237, 0.15); }
-    .pillar-tab-btn.active.tab-gold   { border-color: var(--color-gold); color: #FCD34D; background: rgba(184, 131, 42, 0.15); }
+    .case-challenge {
+      color: var(--color-gray);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
 
+    .case-outcomes {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .outcome-val {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #FAF8F4;
+    }
+
+    .outcome-lbl {
+      font-size: 0.72rem;
+      color: var(--color-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Strategic Pillars Bento Grid */
     .bento-card-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
-    .col-8 { grid-column: span 8; }
-    .col-4 { grid-column: span 4; }
-    .col-6 { grid-column: span 6; }
-    .col-12 { grid-column: span 12; }
-
     @media (max-width: 900px) {
-      .col-8, .col-4, .col-6 { grid-column: span 12; }
+      .bento-card-grid { grid-template-columns: 1fr; }
     }
 
     .spotlight-card {
@@ -488,7 +685,7 @@
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.3s ease;
-      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(124, 58, 237, 0.18), transparent 45%);
+      background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(252, 211, 77, 0.15), transparent 45%);
     }
 
     .spotlight-card:hover .spotlight-glow {
@@ -540,6 +737,26 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--color-paper);
+    }
+
+    /* Brand Showcase Board */
+    .brand-board-box {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      overflow: hidden;
+      margin-top: 40px;
+      background: #0A0807;
+    }
+
+    .brand-board-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .brand-board-img:hover {
+      transform: scale(1.01);
     }
 
     /* Interactive ROI Calculator Section */
@@ -621,33 +838,21 @@
       margin-bottom: 24px;
     }
 
-    /* Lead Diagnostic Modal & Booking Trigger */
+    /* Final CTA */
     .cta-banner {
       text-align: center;
-      background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.15), transparent 70%), var(--color-card-bg);
-      border: 1px solid rgba(124, 58, 237, 0.35);
+      background: radial-gradient(circle at 50% 50%, rgba(252, 211, 77, 0.12), transparent 70%), var(--color-card-bg);
+      border: 1px solid rgba(252, 211, 77, 0.35);
       border-radius: 32px;
       padding: 80px 32px;
       backdrop-filter: blur(24px);
-    }
-
-    .cta-banner h2 {
-      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-      margin-bottom: 20px;
-    }
-
-    .cta-banner p {
-      color: var(--color-gray);
-      font-size: 1.15rem;
-      max-width: 620px;
-      margin: 0 auto 36px;
     }
 
     /* Diagnostic Modal */
     .modal-backdrop {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(10, 8, 7, 0.85);
+      background: rgba(10, 8, 7, 0.88);
       backdrop-filter: blur(16px);
       z-index: 1000;
       display: none;
@@ -662,7 +867,7 @@
 
     .modal-content {
       background: #161210;
-      border: 1px solid rgba(124, 58, 237, 0.4);
+      border: 1px solid rgba(252, 211, 77, 0.4);
       border-radius: 24px;
       max-width: 560px;
       width: 100%;
@@ -714,7 +919,7 @@
     }
 
     .form-input:focus, .form-select:focus {
-      border-color: #7C3AED;
+      border-color: #FCD34D;
     }
 
     /* Footer */
@@ -781,26 +986,19 @@
     <!-- Header Navigation -->
     <header>
       <a href="#" class="brand-logo">
-        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="44" stroke="url(#logo_grad)" stroke-width="8" stroke-dasharray="16 8"/>
-          <path d="M50 22L74 72H26L50 22Z" stroke="#FAF8F4" stroke-width="7" stroke-linejoin="round"/>
-          <circle cx="50" cy="52" r="8" fill="#7C3AED"/>
-          <defs>
-            <linearGradient id="logo_grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#0284C7"/>
-              <stop offset="0.5" stop-color="#7C3AED"/>
-              <stop offset="1" stop-color="#B8832A"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <span class="brand-name">ALGORIZMS</span>
+        <img src="assets/logo_3d_gold.png" alt="Algorizms Official Emblem" class="brand-logo-img" />
+        <div class="brand-text-block">
+          <span class="brand-name">ALGORIZMS</span>
+          <span class="brand-tagline-sub">Growth Engineered Systems</span>
+        </div>
       </a>
 
       <ul class="nav-links">
+        <li><a href="#about" class="nav-link">About Us</a></li>
+        <li><a href="#work" class="nav-link">Our Work</a></li>
         <li><a href="#framework" class="nav-link">Framework</a></li>
-        <li><a href="#pillars" class="nav-link">Strategic Pillars</a></li>
+        <li><a href="#pillars" class="nav-link">Capabilities</a></li>
         <li><a href="#calculator" class="nav-link">ROI Simulator</a></li>
-        <li><a href="#about" class="nav-link">Philosophy</a></li>
       </ul>
 
       <button class="shimmer-btn" onclick="openModal()">
@@ -815,9 +1013,11 @@
 
       <!-- Hero Section -->
       <section class="hero">
+        <img src="assets/logo_3d_gold.png" alt="Algorizms 3D Gold Symbol" class="hero-emblem-center" />
+
         <div class="hero-badge">
           <div class="pulse-dot"></div>
-          <span>Growth Engineered Systems</span>
+          <span>Technology • Growth • Intelligence</span>
         </div>
 
         <h1>
@@ -836,7 +1036,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
           </button>
-          <a href="#framework" class="btn-secondary">Explore Operating Framework</a>
+          <a href="#work" class="btn-secondary">Explore Our Work & Case Studies</a>
         </div>
 
         <!-- Metrics Strip -->
@@ -857,6 +1057,176 @@
             <div class="metric-number">99.4%</div>
             <div class="metric-caption">System Execution Rate</div>
           </div>
+        </div>
+      </section>
+
+      <!-- About Us Section (From Notion Company Profile) -->
+      <section id="about">
+        <div class="section-title-wrap">
+          <span class="section-pill pill-gold">Company Profile</span>
+          <h2>At the Intersection of Technology, Growth & Intelligence</h2>
+          <p class="section-desc">
+            We partner with ambitious founders to solve complex commercial challenges across digital engineering, customer acquisition, and data intelligence.
+          </p>
+        </div>
+
+        <!-- Executive Narrative Card -->
+        <div class="about-overview-card">
+          <div class="quote-badge">
+            "Modern businesses don't operate through isolated silos. Technology influences marketing. Marketing generates data. Data informs product decisions. Product performance dictates growth. When these systems are disconnected, opportunities are lost."
+          </div>
+          <p class="about-text">
+            <strong>Algorizms</strong> was founded on a simple observation: ambitious companies waste millions by patching together fragmented agencies, isolated freelancers, and disjointed software. We operate as a unified growth and technology partner—guiding you from <em>"What should we do?"</em> to <em>"Let's build it, connect it, measure it, and scale it."</em>
+          </p>
+          
+          <div style="display: flex; gap: 20px; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 24px; flex-wrap: wrap;">
+            <div>
+              <div style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #FAF8F4;">MR. Vairus (Mohammad R. Jaffer)</div>
+              <div style="font-size: 0.8rem; color: #FCD34D; font-family: var(--font-mono);">Founder & Chief Systems Architect</div>
+            </div>
+            <div style="margin-left: auto; display: flex; gap: 12px;">
+              <span class="tag-pill" style="border-color: #0284C7; color: #7DD3FC;">Tech Pillar</span>
+              <span class="tag-pill" style="border-color: #7C3AED; color: #C4B5FD;">Growth Pillar</span>
+              <span class="tag-pill" style="border-color: #B8832A; color: #FCD34D;">Data Pillar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 Key Differentiators -->
+        <div class="diff-grid">
+          <div class="diff-card">
+            <div class="diff-num">01 — UNIFIED</div>
+            <h4 class="diff-title">Three Capabilities, One System</h4>
+            <p class="diff-desc">Technology, performance marketing, and data analytics work as one synchronized machine.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-num">02 — VELOCITY</div>
+            <h4 class="diff-title">Strategy + Execution Loop</h4>
+            <p class="diff-desc">We eliminate the gap between high-level advisory and production-grade engineering.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-num">03 — PURPOSE</div>
+            <h4 class="diff-title">Business-First Technology</h4>
+            <p class="diff-desc">Every line of code and component is engineered around revenue, retention, and operational margin.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-num">04 — CERTAINTY</div>
+            <h4 class="diff-title">Data-Driven Growth</h4>
+            <p class="diff-desc">No vanity metrics or guesswork. Acquisition strategies are tied directly to unit economics and LTV.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-num">05 — LEVERAGE</div>
+            <h4 class="diff-title">Connected Systems (Flow)</h4>
+            <p class="diff-desc">The FLOW stage eliminates manual repetition, connecting your tools, teams, and data streams.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-num">06 — MOMENTUM</div>
+            <h4 class="diff-title">Continuous Optimization</h4>
+            <p class="diff-desc">Growth is engineered as an autonomous feedback loop that gets smarter and more efficient over time.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Work & Distinctive Case Studies Section -->
+      <section id="work">
+        <div class="section-title-wrap">
+          <span class="section-pill pill-purple">Proven Impact</span>
+          <h2>Our Work & System Case Studies</h2>
+          <p class="section-desc">
+            Explore how Algorizms engineers momentum for ambitious digital products and global companies.
+          </p>
+        </div>
+
+        <div class="case-studies-grid">
+          
+          <!-- Case Study 01: Global Fintech Scale Engine -->
+          <div class="case-card">
+            <div class="case-preview-box">
+              <div class="case-preview-gradient" style="background: radial-gradient(circle at center, #0284C7, transparent 70%);"></div>
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 10l3 3 7-7"/></svg>
+              <span class="case-metric-badge">+340% Pipeline Velocity</span>
+            </div>
+            <div class="case-body">
+              <div class="case-category">Fintech • Tech Solutions + Data Intelligence</div>
+              <h3 class="case-title">Global Fintech Scale Engine</h3>
+              <p class="case-challenge">
+                Client suffered from disconnected client onboarding, untracked multi-touch attribution, and rising CAC across paid channels.
+              </p>
+              <div class="case-outcomes">
+                <div>
+                  <div class="outcome-val">-42%</div>
+                  <div class="outcome-lbl">Customer Acquisition Cost</div>
+                </div>
+                <div>
+                  <div class="outcome-val">99.9%</div>
+                  <div class="outcome-lbl">Telemetry Accuracy</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case Study 02: Enterprise AI RevOps Architecture -->
+          <div class="case-card">
+            <div class="case-preview-box">
+              <div class="case-preview-gradient" style="background: radial-gradient(circle at center, #7C3AED, transparent 70%);"></div>
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C4B5FD" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+              <span class="case-metric-badge">55 Hrs/Wk Automated</span>
+            </div>
+            <div class="case-body">
+              <div class="case-category">SaaS AI • Autonomous Multi-Agent Engine</div>
+              <h3 class="case-title">Autonomous RevOps Architecture</h3>
+              <p class="case-challenge">
+                Manual lead qualification and fragmented team handoffs were bottlenecking sales velocity and delay-sensitive deals.
+              </p>
+              <div class="case-outcomes">
+                <div>
+                  <div class="outcome-val">$1.8M</div>
+                  <div class="outcome-lbl">ARR Pipeline Added</div>
+                </div>
+                <div>
+                  <div class="outcome-val">14 Days</div>
+                  <div class="outcome-lbl">Deployment Speed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case Study 03: Kinetic Luxury Brand & CRO Engine -->
+          <div class="case-card">
+            <div class="case-preview-box">
+              <div class="case-preview-gradient" style="background: radial-gradient(circle at center, #B8832A, transparent 70%);"></div>
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <span class="case-metric-badge">+86% Conversion Lift</span>
+            </div>
+            <div class="case-body">
+              <div class="case-category">E-Commerce • 3D WebGL + Growth Marketing</div>
+              <h3 class="case-title">Kinetic 3D Commerce Portal</h3>
+              <p class="case-challenge">
+                Static mobile experience had high bounce rates. We engineered a 60 FPS WebGL showcase with Lenis smooth momentum and high-intent remarketing.
+              </p>
+              <div class="case-outcomes">
+                <div>
+                  <div class="outcome-val">4.6x</div>
+                  <div class="outcome-lbl">Return on Ad Spend (ROAS)</div>
+                </div>
+                <div>
+                  <div class="outcome-val">60 FPS</div>
+                  <div class="outcome-lbl">GPU WebGL Smoothness</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Official Brand Identity Board -->
+        <div class="brand-board-box">
+          <img src="assets/brand_board.jpg" alt="Algorizms Official Brand Identity Presentation Board" class="brand-board-img" />
         </div>
       </section>
 
@@ -934,7 +1304,7 @@
         <div class="bento-card-grid">
           
           <!-- Pillar 1: Tech Solutions -->
-          <div class="col-4 spotlight-card" data-spotlight>
+          <div class="spotlight-card" data-spotlight>
             <div class="spotlight-glow"></div>
             <div class="pillar-icon-wrap icon-bg-blue">💻</div>
             <span class="section-pill pill-blue">Pillar 01 • BUILD</span>
@@ -952,7 +1322,7 @@
           </div>
 
           <!-- Pillar 2: Growth Marketing -->
-          <div class="col-4 spotlight-card" data-spotlight>
+          <div class="spotlight-card" data-spotlight>
             <div class="spotlight-glow"></div>
             <div class="pillar-icon-wrap icon-bg-purple">📈</div>
             <span class="section-pill pill-purple">Pillar 02 • GROW</span>
@@ -970,7 +1340,7 @@
           </div>
 
           <!-- Pillar 3: Data Analytics -->
-          <div class="col-4 spotlight-card" data-spotlight>
+          <div class="spotlight-card" data-spotlight>
             <div class="spotlight-glow"></div>
             <div class="pillar-icon-wrap icon-bg-gold">📊</div>
             <span class="section-pill pill-gold">Pillar 03 • KNOW</span>
@@ -1069,6 +1439,7 @@
         <div class="footer-grid">
           <div>
             <div class="brand-logo" style="margin-bottom: 16px;">
+              <img src="assets/logo_3d_gold.png" alt="Algorizms Logo" style="width:32px; height:32px; object-fit:contain;" />
               <span class="brand-name">ALGORIZMS</span>
             </div>
             <p style="color: var(--color-gray); font-size: 0.9rem; max-width: 320px;">
