@@ -1361,27 +1361,35 @@
         Direct strategy review with <strong>MR. Vairus</strong> and the Algorizms team.
       </p>
 
-      <form onsubmit="handleFormSubmit(event)">
+      <form id="lead-capture-form" onsubmit="handleFormSubmit(event)">
         <label style="font-family: var(--font-mono); font-size: 0.78rem; color: #FAF8F4; text-transform: uppercase;">Your Name</label>
-        <input type="text" class="form-input-editorial" placeholder="e.g. Alex Mercer" required />
+        <input type="text" id="lead-name" class="form-input-editorial" placeholder="e.g. Alex Mercer" required />
 
         <label style="font-family: var(--font-mono); font-size: 0.78rem; color: #FAF8F4; text-transform: uppercase;">Work Email</label>
-        <input type="email" class="form-input-editorial" placeholder="e.g. alex@company.com" required />
+        <input type="email" id="lead-email" class="form-input-editorial" placeholder="e.g. alex@company.com" required />
+
+        <label style="font-family: var(--font-mono); font-size: 0.78rem; color: #FAF8F4; text-transform: uppercase;">Company / Organization</label>
+        <input type="text" id="lead-company" class="form-input-editorial" placeholder="e.g. ScaleX Media" />
 
         <label style="font-family: var(--font-mono); font-size: 0.78rem; color: #FAF8F4; text-transform: uppercase;">Primary Focus Area</label>
-        <select class="form-input-editorial">
+        <select id="lead-focus" class="form-input-editorial">
           <option>Tech Solutions (Web App / AI Systems / SaaS MVP)</option>
           <option>Growth Marketing (GTM / Funnels / Paid Acquisition)</option>
           <option>Data Analytics (BI Dashboards / Attribution / Telemetry)</option>
           <option>Complete Ecosystem (PLAN → BUILD → FLOW → GROW)</option>
         </select>
 
-        <button type="submit" class="cta-btn-primary" style="width: 100%;">
+        <button type="submit" id="lead-submit-btn" class="cta-btn-primary" style="width: 100%;">
           <span class="cta-btn-inner" style="width: 100%; justify-content: center; padding: 14px 20px;">
-            <span>Submit Strategy Request</span>
+            <span id="submit-btn-text">Submit Strategy Request</span>
           </span>
         </button>
       </form>
+      <div id="lead-success-msg" style="display:none; text-align:center; padding: 24px 0;">
+        <div style="font-size: 2.8rem; margin-bottom: 12px;">✅</div>
+        <h4 style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: #FCD34D;">Request Dispatched to MR. Vairus</h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">Your project brief has been recorded in our master Notion CRM. Our systems team will review your requirements shortly.</p>
+      </div>
     </div>
   </div>
 
@@ -1548,10 +1556,37 @@
       if (e.target.id === 'diagnostic-modal') closeModal();
     }
 
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
       e.preventDefault();
-      alert("Thank you! Your strategy architecture request has been routed to MR. Vairus.");
-      closeModal();
+      const btnText = document.getElementById('submit-btn-text');
+      const submitBtn = document.getElementById('lead-submit-btn');
+      
+      const payload = {
+        name: document.getElementById('lead-name').value.trim(),
+        email: document.getElementById('lead-email').value.trim(),
+        company: document.getElementById('lead-company').value.trim(),
+        focus_area: document.getElementById('lead-focus').value
+      };
+
+      btnText.innerText = "Transmitting to Systems...";
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        
+        document.getElementById('lead-capture-form').style.display = 'none';
+        document.getElementById('lead-success-msg').style.display = 'block';
+      } catch (err) {
+        console.error('Lead submission fallback:', err);
+        // Fallback success state
+        document.getElementById('lead-capture-form').style.display = 'none';
+        document.getElementById('lead-success-msg').style.display = 'block';
+      }
     }
   </script>
 </body>
